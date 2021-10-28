@@ -7,10 +7,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using ProductosManagementApi.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProductosManagementApi
 {
@@ -26,7 +28,9 @@ namespace ProductosManagementApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddDbContext<Contexto>(options =>
+                options.UseSqlite(Configuration.GetConnectionString("ConStr"))
+            );
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
